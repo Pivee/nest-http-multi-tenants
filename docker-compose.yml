@@ -1,15 +1,26 @@
-version: "3.7"
+version: '3.7'
 
 services:
   postgres:
     container_name: postgres
     image: postgres:latest
     ports:
-      - "5432:5432"
+      - '5432:5432'
     volumes:
       - /data/postgres:/data/postgres
     environment:
       - POSTGRES_USER=username
       - POSTGRES_PASSWORD=password
-      - POSTGRES_MULTIPLE_DATABASES=multiteants,tenant_qwe
+      - POSTGRES_DB=tenants__all
 
+  postgres1:
+    container_name: postgres1
+    image: postgres:latest
+    ports:
+      - '5433:5432'
+    volumes:
+      - /data/postgres:/data/postgres
+    environment:
+      - POSTGRES_USER=username
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=tenant_qwe
