@@ -1,6 +1,7 @@
 import { FactoryProvider, Global, Module, Scope } from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
 import { Request } from 'express';
+import { Product } from '../../modules/tenants/products/entities/product.entity';
 import { createConnection, getConnectionManager } from 'typeorm';
 
 const connectionFactory: FactoryProvider = {
@@ -30,7 +31,7 @@ const connectionFactory: FactoryProvider = {
         password: 'password',
         database: connectionName,
         name: connectionName,
-        entities: [],
+        entities: [Product],
         logging: true,
         synchronize: true,
       } as any);
