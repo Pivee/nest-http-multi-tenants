@@ -9,9 +9,9 @@ export class UsersService {
   private readonly usersRepository: Repository<User>;
   constructor(
     @Inject('COMMON_CONNECTION')
-    connection,
+    commonConnection,
   ) {
-    this.usersRepository = connection.getRepository(User);
+    this.usersRepository = commonConnection.getRepository(User);
   }
 
   async create(createUserDto: CreateUserDto) {

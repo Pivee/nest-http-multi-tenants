@@ -6,19 +6,20 @@ import {
 } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ConnectionModule } from './connection/connection.module';
-import { ConnectionPropsMiddleware } from './middlewares/connection-props.middleware';
 import { CommonModule } from './modules/common/common.module';
 import { TenantsModule } from './modules/tenants/tenants.module';
+import { TenancyMiddleware } from './tenancy/middleware/tenancy.middleware';
+import { TenancyModule } from './tenancy/tenancy.module';
+import { TenantsService } from './tenancy/tenants/tenants.service';
 
 @Module({
-  imports: [ConnectionModule, CommonModule, TenantsModule],
+  imports: [CommonModule, TenantsModule, TenancyModule],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, TenantsService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(ConnectionPropsMiddleware).forRoutes({
+    consumer.apply(TenancyMiddleware).forRoutes({
       path: '*',
       method: RequestMethod.ALL,
     });

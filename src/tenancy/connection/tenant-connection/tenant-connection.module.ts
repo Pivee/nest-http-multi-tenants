@@ -1,8 +1,7 @@
 import { FactoryProvider, Global, Module, Scope } from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
-import { IRequestWithTenantConnection } from 'src/modules/common/tenants/interfaces/request-with-tenant-connection.interface';
 import { createConnection, getConnectionManager } from 'typeorm';
-import { Product } from '../../modules/tenants/products/entities/product.entity';
+import { IRequestWithTenantConnection } from '../../interfaces/request-with-tenant-connection.interface';
 
 const connectionFactory: FactoryProvider = {
   provide: 'TENANT_CONNECTION',
@@ -31,7 +30,7 @@ const connectionFactory: FactoryProvider = {
         username: request.tenantConnection.username,
         password: request.tenantConnection.password,
         database: request.tenantConnection.database,
-        entities: [Product],
+        entities: ['dist/modules/tenants/**/*.entity{.ts,.js}'],
         logging: false,
         synchronize: false,
         dropSchema: false,

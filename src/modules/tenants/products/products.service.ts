@@ -9,9 +9,9 @@ export class ProductsService {
   private readonly productsRepository: Repository<Product>;
   constructor(
     @Inject('TENANT_CONNECTION')
-    connection,
+    tenantConnection,
   ) {
-    this.productsRepository = connection.getRepository(Product);
+    this.productsRepository = tenantConnection.getRepository(Product);
   }
 
   async create(createProductDto: CreateProductDto) {

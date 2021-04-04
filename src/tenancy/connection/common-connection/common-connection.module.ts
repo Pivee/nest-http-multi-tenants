@@ -1,8 +1,7 @@
 import { FactoryProvider, Global, Module, Scope } from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
 import { createConnection, getConnectionManager } from 'typeorm';
-import { Tenant } from '../../modules/common/tenants/entities/tenant.entity';
-import { User } from '../../modules/common/users/entities/user.entity';
+import { Tenant } from '../../tenants/entities/tenant.entity';
 
 const connectionFactory: FactoryProvider = {
   provide: 'COMMON_CONNECTION',
@@ -25,7 +24,8 @@ const connectionFactory: FactoryProvider = {
       username: 'username',
       password: 'password',
       database: 'tenants__all',
-      entities: [Tenant, User],
+      // NOTE: No need to import Tenant if there's a Tenant Microservice
+      entities: [Tenant, 'dist/modules/common/**/*.entity{.ts,.js}'],
       logging: false,
       synchronize: false,
       dropSchema: false,
