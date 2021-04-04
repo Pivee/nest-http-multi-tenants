@@ -1,19 +1,19 @@
 import { FactoryProvider, Global, Module, Scope } from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
-import { Request } from 'express';
-import { Product } from '../../modules/tenants/products/entities/product.entity';
+import { IRequestWithTenantConnection } from 'src/modules/common/tenants/interfaces/request-with-tenant-connection.interface';
 import { createConnection, getConnectionManager } from 'typeorm';
+import { Product } from '../../modules/tenants/products/entities/product.entity';
 
 const connectionFactory: FactoryProvider = {
   provide: 'TENANT_CONNECTION',
   scope: Scope.REQUEST,
-  useFactory: async (request: Request) => {
-    const tenantId = request.headers['x-tenant-id'];
+  useFactory: async (request: IRequestWithTenantConnection) => {
+    const tenantCode = request.headers['x-tenant-code'];
 
     const connectionManager = getConnectionManager();
 
-    if (tenantId) {
-      const connectionName = `tenant_${tenantId}`;
+    if (tenantCode) {
+      const connectionName = request.tenantConnection.name;
 
       if (connectionManager.has(connectionName)) {
         const connection = connectionManager.get(connectionName);
@@ -25,16 +25,16 @@ const connectionFactory: FactoryProvider = {
 
       return createConnection({
         type: 'postgres',
-        host: 'localhost',
-        port: (request as any).connectionProps.port,
-        username: 'username',
-        password: 'password',
-        database: connectionName,
-        name: connectionName,
+        name: request.tenantConnection.name,
+        host: request.tenantConnection.host,
+        port: request.tenantConnection.port,
+        username: request.tenantConnection.username,
+        password: request.tenantConnection.password,
+        database: request.tenantConnection.database,
         entities: [Product],
         logging: false,
-        synchronize: true,
-        dropSchema: true,
+        synchronize: false,
+        dropSchema: false,
       } as any);
     }
   },

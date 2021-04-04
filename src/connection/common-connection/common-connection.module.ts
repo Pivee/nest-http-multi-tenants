@@ -1,6 +1,5 @@
 import { FactoryProvider, Global, Module, Scope } from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
-import { Request } from 'express';
 import { createConnection, getConnectionManager } from 'typeorm';
 import { Tenant } from '../../modules/common/tenants/entities/tenant.entity';
 import { User } from '../../modules/common/users/entities/user.entity';
@@ -8,7 +7,7 @@ import { User } from '../../modules/common/users/entities/user.entity';
 const connectionFactory: FactoryProvider = {
   provide: 'COMMON_CONNECTION',
   scope: Scope.REQUEST,
-  useFactory: async (request: Request) => {
+  useFactory: async () => {
     const connectionManager = getConnectionManager();
 
     if (connectionManager.has('default')) {
@@ -28,7 +27,8 @@ const connectionFactory: FactoryProvider = {
       database: 'tenants__all',
       entities: [Tenant, User],
       logging: false,
-      synchronize: true,
+      synchronize: false,
+      dropSchema: false,
     } as any);
   },
   inject: [REQUEST],

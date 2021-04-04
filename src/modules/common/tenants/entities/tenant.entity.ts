@@ -8,8 +8,18 @@ export class Tenant {
   @Column()
   code: string;
 
-  @Column({
-    nullable: true,
-  })
+  @Column()
+  host: string;
+
+  @Column()
   port: number;
+
+  @Column()
+  username: string;
+
+  @Column()
+  password: string;
+
+  @Column()
+  database: string;
 }

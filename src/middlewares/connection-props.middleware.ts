@@ -14,11 +14,16 @@ export class ConnectionPropsMiddleware implements NestMiddleware {
 
   async use(request: any, response: any, next: () => void) {
     const tenant = await this.tenantsRepository.findOne({
-      code: request.headers['x-tenant-id'],
+      code: request.headers['x-tenant-code'],
     });
 
-    request.connectionProps = {
+    request.tenantConnection = {
+      name: tenant.id,
+      host: tenant.host,
       port: tenant.port,
+      username: tenant.username,
+      password: tenant.password,
+      database: tenant.database,
     };
 
     next();
