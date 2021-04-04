@@ -24,6 +24,7 @@ const connectionFactory: FactoryProvider = {
 
       return createConnection({
         type: 'postgres',
+        // TODO: Set the following properties in the Tenants Table
         name: request.tenantConnection.name,
         host: request.tenantConnection.host,
         port: request.tenantConnection.port,

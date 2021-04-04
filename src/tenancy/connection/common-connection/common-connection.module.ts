@@ -19,6 +19,7 @@ const connectionFactory: FactoryProvider = {
 
     return createConnection({
       type: 'postgres',
+      // TODO: Configure the following properties accordingly
       host: 'localhost',
       port: 5432,
       username: 'username',
