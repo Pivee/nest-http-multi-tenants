@@ -13,7 +13,7 @@ import { TenancyModule } from './tenancy/tenancy.module';
 import { TenantsService } from './tenancy/tenants/tenants.service';
 
 @Module({
-  imports: [CommonModule, TenantSpecificModule, TenancyModule],
+  imports: [TenancyModule, CommonModule, TenantSpecificModule],
   controllers: [AppController],
   providers: [AppService, TenantsService],
 })
