@@ -5,6 +5,7 @@ import { TenantsService } from '../tenants/tenants.service';
 @Injectable()
 export class TenancyMiddleware implements NestMiddleware {
   constructor(
+    // NOTE: TenantsService must be provided into AppModule as a provider
     @Inject(TenantsService) private readonly tenantsService: TenantsService,
   ) {}
 
