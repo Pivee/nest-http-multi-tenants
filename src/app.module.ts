@@ -7,13 +7,13 @@ import {
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CommonModule } from './modules/common/common.module';
-import { TenantsModule } from './modules/tenants/tenants.module';
+import { TenantSpecificModule } from './modules/tenant-specific/tenant-specific.module';
 import { TenancyMiddleware } from './tenancy/middleware/tenancy.middleware';
 import { TenancyModule } from './tenancy/tenancy.module';
 import { TenantsService } from './tenancy/tenants/tenants.service';
 
 @Module({
-  imports: [CommonModule, TenantsModule, TenancyModule],
+  imports: [CommonModule, TenantSpecificModule, TenancyModule],
   controllers: [AppController],
   providers: [AppService, TenantsService],
 })
