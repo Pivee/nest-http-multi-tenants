@@ -11,7 +11,7 @@ services:
     environment:
       - POSTGRES_USER=username
       - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=tenants__all
+      - POSTGRES_DB=common
 
   postgres1:
     container_name: postgres1
@@ -23,4 +23,4 @@ services:
     environment:
       - POSTGRES_USER=username
       - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=tenant_qwe
+      - POSTGRES_DB=T-1fe1e39e-4015-4303-a719-6c91d32dd1aa
