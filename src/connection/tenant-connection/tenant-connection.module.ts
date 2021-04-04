@@ -26,14 +26,15 @@ const connectionFactory: FactoryProvider = {
       return createConnection({
         type: 'postgres',
         host: 'localhost',
-        port: 5433,
+        port: (request as any).connectionProps.port,
         username: 'username',
         password: 'password',
         database: connectionName,
         name: connectionName,
         entities: [Product],
-        logging: true,
+        logging: false,
         synchronize: true,
+        dropSchema: true,
       } as any);
     }
   },

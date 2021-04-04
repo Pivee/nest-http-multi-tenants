@@ -1,13 +1,26 @@
-import { Module } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConnectionModule } from './connection/connection.module';
-import { PublicModule } from './modules/public/public.module';
+import { ConnectionPropsMiddleware } from './middlewares/connection-props.middleware';
+import { CommonModule } from './modules/common/common.module';
 import { TenantsModule } from './modules/tenants/tenants.module';
 
 @Module({
-  imports: [ConnectionModule, PublicModule, TenantsModule],
+  imports: [ConnectionModule, CommonModule, TenantsModule],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(ConnectionPropsMiddleware).forRoutes({
+      path: '*',
+      method: RequestMethod.ALL,
+    });
+  }
+}

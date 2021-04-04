@@ -2,7 +2,8 @@ import { FactoryProvider, Global, Module, Scope } from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
 import { Request } from 'express';
 import { createConnection, getConnectionManager } from 'typeorm';
-import { User } from '../../modules/public/users/entities/user.entity';
+import { Tenant } from '../../modules/common/tenants/entities/tenant.entity';
+import { User } from '../../modules/common/users/entities/user.entity';
 
 const connectionFactory: FactoryProvider = {
   provide: 'COMMON_CONNECTION',
@@ -25,8 +26,8 @@ const connectionFactory: FactoryProvider = {
       username: 'username',
       password: 'password',
       database: 'tenants__all',
-      entities: [User],
-      logging: true,
+      entities: [Tenant, User],
+      logging: false,
       synchronize: true,
     } as any);
   },
