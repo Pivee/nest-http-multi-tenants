@@ -25,7 +25,6 @@ const connectionFactory: FactoryProvider = {
       username: 'username',
       password: 'password',
       database: 'common',
-      // NOTE: No need to import Tenant if there's a Tenant Microservice
       entities: [Tenant, 'dist/modules/common/**/*.entity{.ts,.js}'],
       migrations: ['dist/tenancy/migrations/common/*{.ts,.js}'],
       migrationsRun: true,
